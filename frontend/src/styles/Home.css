@@ -1,0 +1,93 @@
+.page {
+    margin: 1em;
+    height: 100%;
+}
+
+.page-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.top-items {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.user-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+    border-radius: 1.5em;
+    padding: 0.5em;
+
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8.4px);
+    -webkit-backdrop-filter: blur(8.4px);
+    border: 1px solid rgba(255, 255, 255, 0.21);
+
+    width: fit-content;
+}
+
+.user-profile-picture {
+    width: 3em;
+    height: 3em;
+    border-radius: 0.5em;
+}
+
+.user-card-details {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8em;
+    text-align: left;
+}
+
+.user-card-details > p {
+    margin: 0 1em;
+}
+
+.quit-btn {
+    color: white;
+    background-color: black;
+    border: solid;
+    border-width: 2;
+    border-color: crimson;
+    border-radius: 0.5em;
+    width: 4em;
+    height: 4em;
+    transition: background-color 0.25s;
+    transition: color 0.5s;
+}
+
+.quit-btn:hover {
+    background-color: crimson;
+    color: black;
+}
+
+.quit-btn-label {
+    height: 100%;
+    margin: 0;
+    font-size: 130%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.playback-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 15;
+}
+
+#playback-simulator {
+    border-radius: 1em;
+    margin: auto;
+    color: rgb(255, 255, 255);
+}

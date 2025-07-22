@@ -1,0 +1,14 @@
+#spotify-logo {
+    width: 300px;
+    transition: filter 0.25s;
+}
+
+#spotify-logo:hover {
+    filter: drop-shadow(0 0 30px rgba(50, 255, 67, 0.7));
+}
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

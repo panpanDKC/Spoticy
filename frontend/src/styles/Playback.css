@@ -1,0 +1,96 @@
+.track-image {
+    width: 50%;
+    border-radius: 1em;
+    align-self: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.background-image {
+    border-radius: 16px;
+}
+
+.playback-container {
+    /* From https://css.glass */
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.21);
+}
+
+.playback-content {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.track-details {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8.4px);
+    -webkit-backdrop-filter: blur(8.4px);
+    border: 1px solid rgba(255, 255, 255, 0.21);
+    padding: 0.5em 1em;
+}
+
+.track-name {
+    margin: 0;
+    font-size: 1.25em;
+}
+
+.track-artist {
+    margin: 0;
+    font-size: 0.75em;
+    max-width: 100%;
+    align-self: center;
+}
+
+.time-container {
+    display: flex;
+    flex-direction: row;
+    font-size: 0.85em;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.empty-bar {
+    width: 80%;
+    height: 8px;
+    background-color: rgba(168, 168, 168, 0.433);
+    border-radius: 4px;
+}
+
+.full-bar {
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.433);
+    border-radius: 4px;
+    transition: "width 0.5s linear";
+}
+
+.track-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 1em;
+}
+
+.control {
+    display: flex;
+    justify-content: center;
+    background: none;
+}
+
+.control-btn {
+    font-size: 3em;
+    vertical-align: middle;
+    background: none;
+    border: none;
+    transition: filter 0.25s;
+}
+
+.control-btn:hover {
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7));
+}
