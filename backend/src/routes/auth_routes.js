@@ -2,11 +2,11 @@ import express from "express";
 import querystring from "querystring";
 import axios from "axios";
 import { CLIENT_ID, SCOPES, REDIRECT_URI, CLIENT_SECRET } from "../const.js";
+import { clearTokens, saveTokens } from "../utils/token_file_handler.js";
 
 const router = express.Router();
 
 router.get("/login", (req, res) => {
-    console.log("/login reached");
     const params = querystring.stringify({
         response_type: "code",
         client_id: CLIENT_ID,
@@ -77,6 +77,37 @@ router.get("/callback", async (req, res) => {
     } catch (err) {
         console.error(err.response?.data || err.message);
         res.status(500).send("Error retrieving access token");
+    }
+});
+
+router.post("/tokens", (req, res) => {
+    const { access_token, refresh_token } = req.body;
+
+    if (!access_token || !refresh_token) {
+        return res
+            .status(400)
+            .send("Access token and refresh token are required");
+    }
+
+    try {
+        saveTokens({
+            access_token: access_token,
+            refresh_token: refresh_token,
+        });
+        res.status(200).send("Tokens saved successfully");
+    } catch (err) {
+        console.error("Error saving tokens:", err);
+        res.status(500).send("Error saving tokens");
+    }
+});
+
+router.get("/logout", (req, res) => {
+    try {
+        clearTokens();
+        res.status(200).send("Logged out successfully");
+    } catch (error) {
+        console.error("Error during logout:", error);
+        return res.status(500).send("Error during logout");
     }
 });
 

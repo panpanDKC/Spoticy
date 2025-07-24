@@ -1,0 +1,40 @@
+.sliding-container {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+.sliding-text {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.animate {
+    animation: scrollText 10s linear infinite;
+    animation-delay: 1s;
+}
+
+@keyframes scrollText {
+    0% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+    }
+    20% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    80% {
+        transform: translateX(var(--scroll-distance));
+        opacity: 1;
+    }
+    95% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(var(--scroll-distance));
+        opacity: 0;
+    }
+}

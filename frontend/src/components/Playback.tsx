@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     TbPlayerTrackPrevFilled,
     TbPlayerTrackNextFilled,
     TbPlayerPauseFilled,
     TbPlayerPlayFilled,
+    TbRepeat,
+    TbRepeatOnce,
+    TbRepeatOff,
+    TbArrowsShuffle,
+    TbArrowsRight,
 } from "react-icons/tb";
 import type { IPlayback } from "../models/playback";
 import {
@@ -12,23 +17,28 @@ import {
     getPlaybackPrevTrack,
     getPlaybackResumeTrack,
     getPlaybackState,
+    toggleRepeat,
+    toggleShuffle,
 } from "../api/playback";
 import "../styles/Playback.css";
+import SlidingText from "./SlidingText";
+import Card3D from "./Card3D";
 
-export default function Playback() {
+export default function Playback({
+    setPlayback,
+}: {
+    setPlayback?: React.Dispatch<React.SetStateAction<IPlayback | null>>;
+}) {
     const [playbackData, setPlaybackData] = useState<IPlayback>();
     const [isPaused, setIsPaused] = useState(false);
     const [progress, setProgress] = useState(0);
 
-    const accessToken = localStorage.getItem("access_token");
-
     useEffect(() => {
-        if (!accessToken) return;
-
         const fetchPlayback = async () => {
             try {
                 const playback_state = await getPlaybackState();
                 setPlaybackData(playback_state);
+                setPlayback?.(playback_state);
                 setIsPaused(!playback_state.is_playing);
                 setProgress(playback_state.track?.progress || 0);
             } catch (error) {
@@ -44,7 +54,7 @@ export default function Playback() {
 
         // Cleanup on unmount
         return () => clearInterval(interval);
-    }, [accessToken]);
+    }, []);
 
     // Simulate progress ticking every second
     useEffect(() => {
@@ -80,6 +90,36 @@ export default function Playback() {
         }
     };
 
+    const handleToggleRepeat = async () => {
+        const newRepeatMode =
+            playbackData?.repeat_mode === "off"
+                ? "context"
+                : playbackData?.repeat_mode === "context"
+                ? "track"
+                : "off";
+        await toggleRepeat(newRepeatMode);
+    };
+
+    const handleRepeatModeIcon = () => {
+        if (playbackData?.repeat_mode === "off") {
+            return <TbRepeatOff />;
+        } else if (playbackData?.repeat_mode === "context") {
+            return <TbRepeat />;
+        } else if (playbackData?.repeat_mode === "track") {
+            return <TbRepeatOnce />;
+        }
+        return null;
+    };
+
+    const handleToggleShuffle = async () => {
+        await toggleShuffle(!playbackData?.shuffle);
+    };
+
+    const handleShuffleIcon = () => {
+        if (playbackData?.shuffle) return <TbArrowsShuffle />;
+        return <TbArrowsRight />;
+    };
+
     return (
         <div
             className="background-image"
@@ -93,15 +133,19 @@ export default function Playback() {
             <div className="playback-container">
                 {playbackData ? (
                     <div className="playback-content">
-                        <img
-                            className="track-image"
-                            src={playbackData.track.picture.url}
-                            alt={playbackData.track.picture.url}
-                        />
+                        <div className="track-image">
+                            <Card3D image={playbackData.track.picture.url} />
+                        </div>
                         <div className="track-details">
-                            <p className="track-name">
-                                <strong>{playbackData.track?.name}</strong>
-                            </p>
+                            <div className="sliding-track-name">
+                                <SlidingText>
+                                    <p className="track-name">
+                                        <strong>
+                                            {playbackData.track?.name}
+                                        </strong>
+                                    </p>
+                                </SlidingText>
+                            </div>
                             <p className="track-artist">
                                 {playbackData.track?.artists?.join(", ")}
                             </p>
@@ -120,6 +164,14 @@ export default function Playback() {
                                 </span>
                             </div>
                             <div className="track-controls">
+                                <div className="control">
+                                    <button
+                                        className="control-btn-mini"
+                                        onClick={handleToggleShuffle}
+                                    >
+                                        {handleShuffleIcon()}
+                                    </button>
+                                </div>
                                 <div className="control">
                                     <button
                                         className="control-btn"
@@ -146,6 +198,14 @@ export default function Playback() {
                                         onClick={getPlaybackNextTrack}
                                     >
                                         <TbPlayerTrackNextFilled />
+                                    </button>
+                                </div>
+                                <div className="control">
+                                    <button
+                                        className="control-btn-mini"
+                                        onClick={handleToggleRepeat}
+                                    >
+                                        {handleRepeatModeIcon()}
                                     </button>
                                 </div>
                             </div>

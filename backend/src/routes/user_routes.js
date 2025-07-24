@@ -1,17 +1,26 @@
 import axios from "axios";
 import express from "express";
-import { getUserProfile } from "../services/user_service.js";
+import {
+    getUserProfile,
+    getUserQueue,
+    getUserLikedTracks,
+} from "../services/user_service.js";
 
 const router = express.Router();
 
 router.get("/user", async (req, res) => {
-    const auth = req.headers.authorization;
-    if (auth === undefined || !auth.includes(" "))
-        return res.status(403).send("Must provide access_token");
-
-    const token = auth.split(" ")[1];
-    const user_profile = await getUserProfile(token);
+    const user_profile = await getUserProfile();
     return res.send(user_profile);
+});
+
+router.get("/user/queue", async (req, res) => {
+    const user_queue = await getUserQueue();
+    return res.send(user_queue);
+});
+
+router.get("/user/liked", async (req, res) => {
+    const user_liked_tracks = await getUserLikedTracks();
+    return res.send(user_liked_tracks);
 });
 
 export default router;

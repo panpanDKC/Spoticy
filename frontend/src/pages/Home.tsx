@@ -5,6 +5,9 @@ import "../styles/Home.css";
 import Playback from "../components/Playback";
 import { FaPowerOff } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import TrackQueue from "../components/TrackQueue";
+import type { IPlayback } from "../models/playback";
+import { logout } from "../api/connect";
 
 function Home() {
     const navigate = useNavigate();
@@ -13,6 +16,8 @@ function Home() {
     const [userName, setUserName] = useState("");
     const [userMail, setUserMail] = useState("");
     const [userCountry, setUserCountry] = useState("");
+
+    const [playback, setPlayback] = useState<IPlayback | null>(null);
 
     const default_user_image = { height: 300, url: "empty", width: 300 };
     const [userProfilePic, setUserProfilePic] =
@@ -33,9 +38,12 @@ function Home() {
         );
     };
 
-    const handleQuit = () => {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
+    const handleQuit = async () => {
+        try {
+            await logout();
+        } catch (error) {
+            console.error("Error during logout:", error);
+        }
         navigate("/");
     };
 
@@ -76,8 +84,11 @@ function Home() {
                     </button>
                 </div>
                 <div className="playback-div">
+                    <div className="track-queue-container">
+                        <TrackQueue playback_state={playback} />
+                    </div>
                     <div id="playback-simulator">
-                        <Playback></Playback>
+                        <Playback setPlayback={setPlayback} />
                     </div>
                 </div>
             </div>

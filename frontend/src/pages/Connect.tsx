@@ -3,17 +3,14 @@ import { connectSpotify } from "../api/connect";
 
 function Connect() {
     const handleSpotifyClick = async () => {
-        const tokens = await connectSpotify();
-        console.log("tokens", tokens);
-        //localStorage.setItem("access_token", acces_token);
-        //localStorage.setItem("refresh_token", refresh_token);
+        await connectSpotify();
     };
 
     return (
         <div className="page-content">
             <div>
                 <img
-                    src="/src/assets/spotify-logo.png"
+                    src="/assets/spotify-logo.png"
                     id="spotify-logo"
                     onClick={handleSpotifyClick}
                 />

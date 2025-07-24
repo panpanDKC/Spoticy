@@ -1,7 +1,8 @@
-import axios from "axios";
 import express from "express";
 import {
     getPlaybackState,
+    toggleRepeat,
+    toggleShuffle,
     triggerNextTrack,
     triggerPauseTrack,
     triggerPrevTrack,
@@ -11,53 +12,51 @@ import {
 const router = express.Router();
 
 router.get("/playback", async (req, res) => {
-    const auth = req.headers.authorization;
-    if (auth === undefined || !auth.includes(" "))
-        return res.status(403).send("Must provide access_token");
-    const token = auth.split(" ")[1];
-
-    const playback = await getPlaybackState(token);
+    const playback = await getPlaybackState();
     return res.send(playback);
 });
 
 router.get("/playback/next", async (req, res) => {
-    const auth = req.headers.authorization;
-    if (auth === undefined || !auth.includes(" "))
-        return res.status(403).send("Must provide access_token");
-    const token = auth.split(" ")[1];
-
-    const result = await triggerNextTrack(token);
+    const result = await triggerNextTrack();
     return res.status(result);
 });
 
 router.get("/playback/prev", async (req, res) => {
-    const auth = req.headers.authorization;
-    if (auth === undefined || !auth.includes(" "))
-        return res.status(403).send("Must provide access_token");
-    const token = auth.split(" ")[1];
-
-    const result = await triggerPrevTrack(token);
+    const result = await triggerPrevTrack();
     return res.status(result);
 });
 
-router.get("/playback/resume", async (req, res) => {
-    const auth = req.headers.authorization;
-    if (auth === undefined || !auth.includes(" "))
-        return res.status(403).send("Must provide access_token");
-    const token = auth.split(" ")[1];
+router.post("/playback/resume", async (req, res) => {
+    const context_uri = req.body.context_uri || null;
+    const offset = req.body.offset || 0;
 
-    const result = await triggerResumeTrack(token);
+    const result = await triggerResumeTrack(context_uri, offset);
     return res.status(result);
 });
 
 router.get("/playback/pause", async (req, res) => {
-    const auth = req.headers.authorization;
-    if (auth === undefined || !auth.includes(" "))
-        return res.status(403).send("Must provide access_token");
-    const token = auth.split(" ")[1];
-
-    const result = await triggerPauseTrack(token);
+    const result = await triggerPauseTrack();
     return res.status(result);
+});
+
+router.put("/playback/shuffle", async (req, res) => {
+    const shuffle = req.body.shuffle;
+
+    const resp = await toggleShuffle(shuffle);
+    if (!resp) {
+        return res.status(500).send("Failed to toggle shuffle");
+    }
+    return res.status(resp);
+});
+
+router.put("/playback/repeat", async (req, res) => {
+    const repeatState = req.body.state;
+
+    const resp = await toggleRepeat(repeatState);
+    if (!resp) {
+        return res.status(500).send("Failed to toggle repeat");
+    }
+    return res.status(resp);
 });
 
 export default router;

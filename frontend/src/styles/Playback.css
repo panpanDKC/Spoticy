@@ -1,32 +1,40 @@
 .track-image {
-    width: 50%;
-    border-radius: 1em;
     align-self: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    /*border-radius: 1em;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);*/
 }
 
 .background-image {
     border-radius: 16px;
+    width: 100%;
+    height: 100%;
 }
 
 .playback-container {
     /* From https://css.glass */
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.21);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .playback-content {
     padding: 1em;
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 2em;
 }
 
 .track-details {
+    width: 500px;
     background: rgba(0, 0, 0, 0.5);
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
@@ -34,6 +42,18 @@
     -webkit-backdrop-filter: blur(8.4px);
     border: 1px solid rgba(255, 255, 255, 0.21);
     padding: 0.5em 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.sliding-track-name {
+    max-width: 60%;
+    align-self: center;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
 }
 
 .track-name {
@@ -93,4 +113,35 @@
 
 .control-btn:hover {
     filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7));
+}
+
+.control-btn-mini {
+    font-size: 1.4em;
+    vertical-align: middle;
+    background: none;
+    border: none;
+    transition: filter 0.25s;
+}
+
+.control-btn-mini:hover {
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.9));
+}
+
+@media screen and (width <= 1000px) {
+    .track-details {
+        width: 300px;
+    }
+
+    .control-btn {
+        font-size: 1.5em;
+    }
+
+    .control-btn-mini {
+        font-size: 0.8em;
+    }
+
+    .empty-bar {
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+    }
 }

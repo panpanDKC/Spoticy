@@ -22,6 +22,12 @@ app.use(user_router);
 import playback_router from "./routes/playback_routes.js";
 app.use(playback_router);
 
+import playlist_router from "./routes/playlist_routes.js";
+app.use(playlist_router);
+
+import album_router from "./routes/album_routes.js";
+app.use(album_router);
+
 app.get("/test", async (req, res) => {
     return res.status(200).send("Ntm");
 });
