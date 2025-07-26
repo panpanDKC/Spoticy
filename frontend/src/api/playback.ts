@@ -1,9 +1,9 @@
 import axios from "axios";
-import { API_URL } from "../const";
+import { SPOTICY_API_URL } from "../const";
 
 export async function getPlaybackState() {
     try {
-        const resp = await axios.get(`${API_URL}/playback`);
+        const resp = await axios.get(`${SPOTICY_API_URL}/playback`);
         return resp.data;
     } catch (err) {
         console.error(err);
@@ -12,7 +12,7 @@ export async function getPlaybackState() {
 
 export async function getPlaybackNextTrack() {
     try {
-        const resp = await axios.get(`${API_URL}/playback/next`);
+        const resp = await axios.get(`${SPOTICY_API_URL}/playback/next`);
         return resp.status;
     } catch (err) {
         console.error(err);
@@ -21,7 +21,7 @@ export async function getPlaybackNextTrack() {
 
 export async function getPlaybackPrevTrack() {
     try {
-        const resp = await axios.get(`${API_URL}/playback/prev`);
+        const resp = await axios.get(`${SPOTICY_API_URL}/playback/prev`);
         return resp.status;
     } catch (err) {
         console.error(err);
@@ -30,7 +30,7 @@ export async function getPlaybackPrevTrack() {
 
 export async function getPlaybackPauseTrack() {
     try {
-        const resp = await axios.get(`${API_URL}/playback/pause`);
+        const resp = await axios.get(`${SPOTICY_API_URL}/playback/pause`);
         return resp.status;
     } catch (err) {
         console.error(err);
@@ -42,7 +42,7 @@ export async function getPlaybackResumeTrack(
     offset: number = 0
 ) {
     try {
-        const resp = await axios.post(`${API_URL}/playback/resume`, {
+        const resp = await axios.post(`${SPOTICY_API_URL}/playback/resume`, {
             context_uri: context_uri,
             offset: offset,
         });
@@ -54,7 +54,7 @@ export async function getPlaybackResumeTrack(
 
 export async function toggleShuffle(shuffle: boolean) {
     try {
-        const resp = await axios.put(`${API_URL}/playback/shuffle`, {
+        const resp = await axios.put(`${SPOTICY_API_URL}/playback/shuffle`, {
             shuffle: shuffle,
         });
         return resp;
@@ -65,7 +65,7 @@ export async function toggleShuffle(shuffle: boolean) {
 
 export async function toggleRepeat(repeat: "off" | "context" | "track") {
     try {
-        const resp = await axios.put(`${API_URL}/playback/repeat`, {
+        const resp = await axios.put(`${SPOTICY_API_URL}/playback/repeat`, {
             state: repeat,
         });
         return resp.status;

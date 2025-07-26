@@ -1,0 +1,158 @@
+.next-departure-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+    height: 100vh;
+    background-color: #e0e0e0;
+}
+
+.departure-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 50%;
+}
+
+.departure {
+    display: flex;
+    flex-direction: column;
+    align-items: first baseline;
+    justify-content: space-evenly;
+    gap: 0.5em;
+
+    width: fit-content;
+    min-width: 500px;
+
+    height: 40%;
+    padding: 1.5em;
+
+    border-radius: 50px;
+    background: #e0e0e0;
+    box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+}
+
+.departure-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 5em;
+    height: 5em;
+
+    background-color: #5894d0;
+
+    border-radius: 20px;
+}
+
+.departure-line-label {
+    font-size: 3em;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+.departure-details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1em;
+
+    height: fit-content;
+
+    text-align: left;
+
+    color: rgb(50, 50, 50);
+}
+
+.next-departure-page p {
+    margin: 0;
+}
+
+.station-dest-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    gap: 0.5em;
+}
+
+.station-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: rgb(50, 50, 50);
+}
+
+.destination-name {
+    font-size: 0.8em;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.5);
+    text-align: left;
+}
+
+.timestamp-container {
+    position: relative;
+    height: fit-content;
+}
+
+.departure-timestamp {
+    font-size: 3.5em;
+    font-weight: bold;
+    height: fit-content;
+}
+
+.next-departure-container {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+
+    font-size: 0.8em;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (width <= 500px) {
+    .station-dest-container {
+        flex-direction: column;
+        align-items: first baseline;
+        justify-content: center;
+
+        text-align: left;
+    }
+
+    .departure {
+        min-width: 80%;
+    }
+
+    .departure-container {
+        width: 100%;
+    }
+}
+
+.blinking {
+    animation: blinking-text 3s ease-in-out infinite;
+    animation-delay: 0s;
+}
+
+@keyframes blinking-text {
+    0% {
+        opacity: 1;
+    }
+    10% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+    }
+}

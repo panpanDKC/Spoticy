@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { saveTokens } from "../api/connect";
+import { SPOTICY_CONNECT_URL, SPOTICY_HOME_URL } from "../const";
 
 export default function SpotifyAuth() {
     const [params] = useSearchParams();
@@ -14,15 +15,15 @@ export default function SpotifyAuth() {
         ) => {
             if (!acc_token || !ref_token) {
                 console.error("Access token or refresh token is missing");
-                navigate("/");
+                navigate(SPOTICY_CONNECT_URL);
                 return;
             }
             const status = await saveTokens(acc_token, ref_token);
             if (status === 200) {
-                navigate("/home");
+                navigate(SPOTICY_HOME_URL);
             } else {
                 console.error("Failed to save tokens");
-                navigate("/");
+                navigate(SPOTICY_CONNECT_URL);
             }
         };
 

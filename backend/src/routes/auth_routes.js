@@ -72,7 +72,7 @@ router.get("/callback", async (req, res) => {
         const { access_token, refresh_token } = response.data;
 
         res.redirect(
-            `http://localhost:5173/spotify-auth?access_token=${access_token}&refresh_token=${refresh_token}`
+            `http://localhost:5173/spoticy/auth?access_token=${access_token}&refresh_token=${refresh_token}`
         );
     } catch (err) {
         console.error(err.response?.data || err.message);

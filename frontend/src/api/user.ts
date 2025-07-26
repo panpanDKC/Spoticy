@@ -1,10 +1,10 @@
 import axios from "axios";
-import { API_URL } from "../const";
+import { SPOTICY_API_URL } from "../const";
 import type { User } from "../models/user";
 
 export async function getUserProfile() {
     try {
-        const resp = await axios.get(`${API_URL}/user`);
+        const resp = await axios.get(`${SPOTICY_API_URL}/user`);
         return resp.data as User;
     } catch (err) {
         console.error(err);
@@ -13,7 +13,7 @@ export async function getUserProfile() {
 
 export async function getUserQueue() {
     try {
-        const resp = await axios.get(`${API_URL}/user/queue`);
+        const resp = await axios.get(`${SPOTICY_API_URL}/user/queue`);
         return resp.data;
     } catch (err) {
         console.error(err);
@@ -22,7 +22,7 @@ export async function getUserQueue() {
 
 export async function getLikedTracks() {
     try {
-        const resp = await axios.get(`${API_URL}/user/liked`);
+        const resp = await axios.get(`${SPOTICY_API_URL}/user/liked`);
         return resp.data;
     } catch (err) {
         console.error(err);

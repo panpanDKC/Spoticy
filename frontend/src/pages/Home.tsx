@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import TrackQueue from "../components/TrackQueue";
 import type { IPlayback } from "../models/playback";
 import { logout } from "../api/connect";
+import { SPOTICY_CONNECT_URL } from "../const";
 
 function Home() {
     const navigate = useNavigate();
@@ -44,7 +45,7 @@ function Home() {
         } catch (error) {
             console.error("Error during logout:", error);
         }
-        navigate("/");
+        navigate(SPOTICY_CONNECT_URL);
     };
 
     useEffect(() => {

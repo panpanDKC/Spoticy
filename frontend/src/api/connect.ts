@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "../const";
+import { SPOTICY_API_URL } from "../const";
 
 export async function connectSpotify() {
     // try {
@@ -14,13 +14,13 @@ export async function connectSpotify() {
     //     console.error(err);
     //     return err;
     // }
-    window.location.href = `${API_URL}/login`;
+    window.location.href = `${SPOTICY_API_URL}/login`;
 }
 
 export async function saveTokens(access_token: string, refresh_token: string) {
     try {
         const resp = await axios.post(
-            `${API_URL}/tokens`,
+            `${SPOTICY_API_URL}/tokens`,
             {
                 access_token,
                 refresh_token,
@@ -40,7 +40,7 @@ export async function saveTokens(access_token: string, refresh_token: string) {
 
 export async function logout() {
     try {
-        const resp = await axios.get(`${API_URL}/logout`, {
+        const resp = await axios.get(`${SPOTICY_API_URL}/logout`, {
             headers: {
                 "Content-Type": "application/json",
             },
