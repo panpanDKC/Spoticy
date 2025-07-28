@@ -1,0 +1,296 @@
+.weather-app-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+    height: 100vh;
+    background-color: rgb(113, 178, 242);
+    /* background: url("/src/assets/test.jpeg"); */
+}
+
+.meteo-dark-bg {
+    background-color: rgb(50, 65, 80);
+}
+
+#meteo-background {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    flex: 1;
+
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.weather-app-page-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+
+    height: 100%;
+    width: 30%;
+
+    margin: 1em 0;
+}
+
+.location-info {
+    flex: 1;
+}
+
+.location-info p {
+    margin: 0;
+
+    text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+}
+
+.location-city {
+    font-weight: bold;
+    font-size: 2.5em;
+}
+
+.location-country {
+    font-weight: lighter;
+    font-size: 1.2em;
+}
+
+.weather-app-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+
+    flex: 10;
+
+    padding: 1em;
+}
+
+.content-row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+
+    flex: 1;
+}
+
+.info-container {
+    display: flex;
+}
+
+#temperature-container {
+    flex: 1;
+}
+
+.glass-content-container-TEMPERATURE {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#current-temp-label {
+    font-size: 4em;
+}
+
+#temp-min-max-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.temp-label {
+    font-size: 1.2em;
+}
+
+.temp-value {
+    font-size: 0.8em;
+}
+
+#condition-container {
+    flex: 1;
+}
+
+.glass-content-container-CONDITION {
+    display: flex;
+    flex-direction: column;
+}
+
+#condition-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex: 10;
+    font-size: 7em;
+    text-align: center;
+}
+
+#condition-label-container {
+    flex: 1;
+}
+
+#wind-container {
+    flex: 1;
+}
+
+.glass-content-container-VENT {
+    display: flex;
+    flex-direction: row;
+}
+
+#wind-compass-container {
+    position: relative;
+    display: inline-block;
+
+    flex: 1;
+}
+
+#compass-img {
+    margin: auto;
+    width: 90%;
+}
+
+#compass-arrow {
+    position: absolute;
+    font-size: 400%;
+
+    left: 50%;
+    top: 50%;
+}
+
+#wind-details-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    flex: 1;
+}
+
+#wind-details-speed {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.3em;
+}
+
+#wind-speed {
+    font-size: 3.5em;
+    font-weight: bold;
+}
+
+#wind-speed-label {
+    font-size: 1.2em;
+}
+
+#wind-label,
+#wind-angle {
+    font-size: 1.5em;
+}
+
+.glass-content-container-CIEL {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+#uv-container,
+#cloud-container,
+#cloud-value-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#uv-container,
+#cloud-container {
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+#sky-container {
+    flex: 2;
+}
+
+.glass-content-container-PRECIPITATION {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
+#rain-volume-container,
+#humidity-container,
+#pressure-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#rain-volume-container {
+    flex: 2;
+    align-self: center;
+    align-items: baseline;
+    gap: 0.3em;
+}
+
+#rain-volume-value {
+    font-size: 3.5em;
+    font-weight: bold;
+}
+
+#humidity-container,
+#pressure-container {
+    justify-content: space-between;
+    flex: 1;
+}
+
+#humidity-content,
+#pressure-content,
+#cloud-value-container {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.3em;
+}
+
+#humidity-value,
+#pressure-value,
+#cloud-value,
+#uv-value {
+    font-size: 1.5em;
+}
+
+#rain-volume-label,
+#cloud-label,
+#uv-label {
+    font-size: 1.2em;
+}
+
+#rain-container {
+    flex: 3;
+}
+
+.sunny-bg,
+.cloudy-bg,
+.cloudy-heavy-bg {
+    background-size: contain; /* Remplit toute la div sans déformation */
+    background-position: center; /* Centre l’image */
+    background-repeat: no-repeat;
+    object-fit: cover;
+}
+
+.sunny-bg {
+    background: url("/src/assets/meteo-sunny.png");
+}
+
+.cloudy-bg {
+    background: url("/src/assets/meteo-cloudy.png");
+}
+
+.cloudy-heavy-bg {
+    background: url("/src/assets/meteo-cloudy-heavy.png");
+}

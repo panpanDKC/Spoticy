@@ -10,7 +10,7 @@ function Connect() {
         <div className="page-content">
             <div>
                 <img
-                    src="/assets/spotify-logo.png"
+                    src="/src/assets/spotify-logo.png"
                     id="spotify-logo"
                     onClick={handleSpotifyClick}
                 />
