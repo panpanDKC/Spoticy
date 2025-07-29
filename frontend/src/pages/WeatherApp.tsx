@@ -12,6 +12,7 @@ import "../styles/WeatherApp.css";
 import { useEffect, useState } from "react";
 import {
     FakeWeather,
+    getWindLabel,
     IconWeatherMapping,
     rain_code_list,
     snow_code_list,
@@ -19,10 +20,32 @@ import {
     type CurrentAndNextWeatherData,
 } from "../models/weatherData";
 import Rain from "../components/Rain";
+import { getWeather } from "../api/weather";
 
 function WeatherApp() {
     const [weatherData, setWeatherData] = useState<CurrentAndNextWeatherData>();
     const [isRaining, setIsRaining] = useState<boolean>(false);
+    const [userCoords, setUserCoords] = useState<{ lat: number; lng: number }>({
+        lat: 48.86,
+        lng: 2.33,
+    });
+
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    setUserCoords({
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    });
+                },
+                (error) => {
+                    // display an error if we cant get the users position
+                    console.error("Error getting user location:", error);
+                }
+            );
+        }
+    }, []);
 
     useEffect(() => {
         const info_content = document.querySelectorAll(
@@ -61,9 +84,10 @@ function WeatherApp() {
                 page_background?.classList.add("meteo-dark-bg");
             }
         };
-        const fetchData = () => {
-            setWeatherData(FakeWeather);
-            setEnvironment(FakeWeather.current_day.condition);
+        const fetchData = async () => {
+            const w_data = await getWeather(userCoords.lat, userCoords.lng);
+            setWeatherData(w_data);
+            setEnvironment(w_data.current_day.condition);
         };
         fetchData();
 
@@ -71,7 +95,7 @@ function WeatherApp() {
 
         // Cleanup on unmount
         return () => clearInterval(interval);
-    }, []);
+    }, [userCoords]);
 
     const getAngle = () => {
         const currentAngle = weatherData?.current_day.wind.angle;
@@ -106,6 +130,7 @@ function WeatherApp() {
                             {weatherData?.location.city}
                         </p>
                         <p className="location-country">
+                            {weatherData?.location.region},{" "}
                             {weatherData?.location.country}
                         </p>
                     </div>
@@ -195,7 +220,12 @@ function WeatherApp() {
                                     </div>
                                     <div id="wind-details-container">
                                         <div id="wind-details-label">
-                                            <p id="wind-label">Brise</p>
+                                            <p id="wind-label">
+                                                {getWindLabel(
+                                                    weatherData?.current_day
+                                                        .wind.speed || 0
+                                                )}
+                                            </p>
                                         </div>
                                         <div id="wind-details-speed">
                                             <p id="wind-speed">

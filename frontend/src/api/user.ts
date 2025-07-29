@@ -8,6 +8,7 @@ export async function getUserProfile() {
         return resp.data as User;
     } catch (err) {
         console.error(err);
+        return null;
     }
 }
 

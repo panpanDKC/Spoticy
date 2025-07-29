@@ -11,6 +11,7 @@ import { IoThunderstorm } from "react-icons/io5";
 export interface CurrentAndNextWeatherData {
     location: {
         city: string;
+        region: string;
         country: string;
     };
     current_day: WeatherData;
@@ -46,6 +47,7 @@ export const IconWeatherMapping: {
     1000: { text: "Ensoleillé", icon: MdSunny },
     1003: { text: "Partiellement nuageux", icon: BsFillCloudSunFill },
     1006: { text: "Nuageux", icon: BsFillCloudsFill },
+    1009: { text: "Couvert", icon: BsFillCloudsFill },
 };
 
 // Set icon for raining condition
@@ -70,9 +72,29 @@ thunder_code_list.forEach((code) => {
     IconWeatherMapping[code] = { text: "Orages", icon: IoThunderstorm };
 });
 
+export function getWindLabel(wind_kph: number) {
+    if (wind_kph < 1) {
+        return "Calme";
+    }
+
+    if (wind_kph < 20) {
+        return "Brise";
+    }
+
+    if (wind_kph < 50) {
+        return "Vent modéré";
+    }
+
+    if (wind_kph < 75) {
+        return "Vent Violent";
+    }
+    return "Tempête";
+}
+
 export const FakeWeather: CurrentAndNextWeatherData = {
     location: {
         city: "Antony",
+        region: "Ile-de-France",
         country: "France",
     },
     current_day: {
