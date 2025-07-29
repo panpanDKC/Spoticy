@@ -20,7 +20,6 @@ import {
     type CurrentAndNextWeatherData,
 } from "../models/weatherData";
 import Rain from "../components/Rain";
-import { getWeather } from "../api/weather";
 
 function WeatherApp() {
     const [weatherData, setWeatherData] = useState<CurrentAndNextWeatherData>();
@@ -90,6 +89,8 @@ function WeatherApp() {
             } else {
                 meteo_background?.classList.add("cloudy-heavy-bg");
             }
+
+            document.body.classList.add("block-scroll");
             if (
                 rain_code_list.includes(condition_code) ||
                 thunder_code_list.includes(condition_code) ||

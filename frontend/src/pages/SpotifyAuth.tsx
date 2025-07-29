@@ -18,7 +18,10 @@ export default function SpotifyAuth() {
                 navigate(SPOTICY_CONNECT_URL);
                 return;
             }
+
+            console.log("before tokens");
             const status = await saveTokens(acc_token, ref_token);
+            console.log("after tokens:", status);
             if (status === 200) {
                 navigate(SPOTICY_HOME_URL);
             } else {

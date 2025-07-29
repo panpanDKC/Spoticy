@@ -33,7 +33,9 @@ coverage/
 *.tgz
 *.swp
 
-#SSL Cert
-san.cnf
+spotify-tokens.json
+
+# SSL Cert
 server.cert
 server.key
+san.cnf

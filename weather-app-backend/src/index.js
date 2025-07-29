@@ -8,8 +8,8 @@ const app = express();
 const port = 8887;
 
 const options = {
-    key: fs.readFileSync("server.key"),
-    cert: fs.readFileSync("server.cert"),
+    key: fs.readFileSync("../../server.key"),
+    cert: fs.readFileSync("../../server.cert"),
 };
 
 app.use(express.json());
