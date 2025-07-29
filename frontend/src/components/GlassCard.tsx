@@ -6,29 +6,45 @@ export interface GlassCardProps {
     children?: React.ReactNode;
     title?: string;
     icon?: IconType;
-    isRaining?: boolean;
 }
 
-export default function GlassCard({
-    children,
-    title,
-    icon,
-    isRaining = false,
-}: GlassCardProps) {
+export default function GlassCard({ children, title, icon }: GlassCardProps) {
     const contentClassName = `glass-content-container-${title}`;
 
-    const containerRef = useRef<HTMLDivElement>(null);
     const cardRef = useRef<HTMLDivElement>(null);
 
-    const handleMouseMove = (e: React.MouseEvent) => {
+    const handleMouseMove = (e: MouseEvent) => {
         const el = cardRef.current;
         if (!el) return;
+
         const rect = el.getBoundingClientRect();
-        const x = e.clientX - rect.left; // px within the card
+        const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        // Distance from center (you could also use edge-based)
+        const dx = x - centerX;
+        const dy = y - centerY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        // Max distance threshold (from center to corner)
+        const maxDistance = Math.sqrt(centerX * centerX + centerY * centerY);
+
+        // Invert and clamp: closer = stronger
+        const intensity = Math.max(0, 1 - distance / maxDistance);
+
         el.style.setProperty("--x", `${x}px`);
         el.style.setProperty("--y", `${y}px`);
+        el.style.setProperty("--o", `${intensity}`); // use gradual glow
     };
+
+    useEffect(() => {
+        const onMove = (e: MouseEvent) => handleMouseMove(e);
+
+        window.addEventListener("mousemove", onMove);
+        return () => window.removeEventListener("mousemove", onMove);
+    }, []);
 
     const handleMouseEnter = () => {
         cardRef.current?.style.setProperty("--o", "1");
@@ -38,31 +54,11 @@ export default function GlassCard({
         cardRef.current?.style.setProperty("--o", "0");
     };
 
-    useEffect(() => {
-        const container = containerRef.current;
-        if (!container) return;
-
-        container.innerHTML = "";
-
-        for (let i = 0; i < 10; i++) {
-            const drop = document.createElement("div");
-            drop.className = "drip-drop";
-            drop.style.left = `${Math.random() * 90}%`;
-            drop.style.animationDelay = `${Math.random() * 5}s`;
-            drop.style.animationDuration = `${2 + Math.random() * 2}s`;
-            drop.style.zIndex = `${Math.random() < 0.5 ? 0 : 1}`;
-            drop.style.filter = `blur(${Math.random() * 1}px)`;
-
-            container.appendChild(drop);
-        }
-    }, [isRaining]);
-
     return (
         <>
             <div
                 className="glass-container shiny-card"
                 ref={cardRef}
-                onMouseMove={handleMouseMove}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
@@ -75,9 +71,6 @@ export default function GlassCard({
                 <div className={contentClassName} style={{ flex: 10 }}>
                     {children}
                 </div>
-                {isRaining && (
-                    <div className="drip-container" ref={containerRef} />
-                )}
             </div>
         </>
     );

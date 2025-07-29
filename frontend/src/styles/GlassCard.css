@@ -132,7 +132,7 @@
 
     /* Mask trick: show the bright ring only in the border area,
      but keep the outer halo visible outside the element. */
-    padding: 1px; /* border thickness for the mask gap */
+    padding: 1.5px; /* border thickness for the mask gap */
     -webkit-mask: linear-gradient(#000 0 0) content-box,
         linear-gradient(#000 0 0);
     -webkit-mask-composite: xor; /* Chrome/Safari */

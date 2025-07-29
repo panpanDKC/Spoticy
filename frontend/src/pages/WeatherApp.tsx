@@ -118,7 +118,6 @@ function WeatherApp() {
                                 <GlassCard
                                     title="TEMPERATURE"
                                     icon={FaTemperatureHalf}
-                                    isRaining={isRaining}
                                 >
                                     <div id="temps-container">
                                         <p id="current-temp-label">
@@ -164,11 +163,7 @@ function WeatherApp() {
                                 id="condition-container"
                                 className="info-container"
                             >
-                                <GlassCard
-                                    title="CONDITION"
-                                    icon={MdSunny}
-                                    isRaining={isRaining}
-                                >
+                                <GlassCard title="CONDITION" icon={MdSunny}>
                                     <div id="condition-icon-container">
                                         {(() => {
                                             const Icon = getConditionIcon();
@@ -185,11 +180,7 @@ function WeatherApp() {
                         </div>
                         <div className="content-row" id="second-line">
                             <div id="wind-container" className="info-container">
-                                <GlassCard
-                                    title="VENT"
-                                    icon={TbWind}
-                                    isRaining={isRaining}
-                                >
+                                <GlassCard title="VENT" icon={TbWind}>
                                     <div id="wind-compass-container">
                                         <img
                                             id="compass-img"
@@ -230,11 +221,7 @@ function WeatherApp() {
                         </div>
                         <div className="content-row" id="third-line">
                             <div id="sky-container" className="info-container">
-                                <GlassCard
-                                    title="CIEL"
-                                    icon={FaQuestion}
-                                    isRaining={isRaining}
-                                >
+                                <GlassCard title="CIEL" icon={FaQuestion}>
                                     <div id="uv-container">
                                         <p id="uv-label">UV</p>
                                         <p id="uv-value">
@@ -258,11 +245,7 @@ function WeatherApp() {
                                 </GlassCard>
                             </div>
                             <div id="rain-container" className="info-container">
-                                <GlassCard
-                                    title="PRECIPITATION"
-                                    icon={IoRainy}
-                                    isRaining={isRaining}
-                                >
+                                <GlassCard title="PRECIPITATION" icon={IoRainy}>
                                     <div id="rain-volume-container">
                                         <p id="rain-volume-value">
                                             {
