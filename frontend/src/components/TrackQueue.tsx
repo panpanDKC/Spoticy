@@ -20,7 +20,6 @@ export default function TrackQueue({
     useEffect(() => {
         const getTrackQueue = async () => {
             const context_uri_tmp = playback_state?.context_uri?.split(":");
-            console.log("context_uri_tmp", context_uri_tmp);
 
             if (context_uri_tmp && context_uri_tmp[1] === "playlist") {
                 const songs = await getPlaylistById(context_uri_tmp[2] || "");
@@ -53,6 +52,7 @@ export default function TrackQueue({
         // Simulate fetching tracks when the component mounts
         if (!playback_state?.context_uri) {
             console.warn("No context URI provided, skipping track fetch.");
+            setTracks([]);
             return;
         }
         fetchTracks();

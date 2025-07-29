@@ -9,7 +9,7 @@ import { TbWind } from "react-icons/tb";
 import { IoRainy } from "react-icons/io5";
 
 import "../styles/WeatherApp.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     FakeWeather,
     getWindLabel,
@@ -30,7 +30,12 @@ function WeatherApp() {
         lng: 2.33,
     });
 
+    const locationCalled = useRef(false);
+
     useEffect(() => {
+        if (locationCalled.current) {
+            return;
+        }
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
@@ -40,26 +45,35 @@ function WeatherApp() {
                     });
                 },
                 (error) => {
+                    console.error(error.message);
                     // display an error if we cant get the users position
                     console.error("Error getting user location:", error);
                 }
             );
         }
+        locationCalled.current = true;
     }, []);
 
     useEffect(() => {
-        const info_content = document.querySelectorAll(
-            ".content-row .info-container"
-        );
+        const clearBackgound = () => {
+            const meteo_background =
+                document.querySelector("#meteo-background");
+            const page_background = document.querySelector(".weather-app-page");
 
-        info_content.forEach((elm) => {
-            const elm_flex = parseInt(elm.getAttribute("flex") || "0");
-            elm.setAttribute("flex", (elm_flex + 1).toString());
-        });
-    });
+            ["cloudy-heavy-bg", "cloudy-bg", "sunny-bg"].forEach((cls) => {
+                meteo_background?.classList.remove(cls);
+                page_background?.classList.remove(cls);
+            });
 
-    useEffect(() => {
+            ["meteo-dark-bg", "meteo-clear-bg"].forEach((cls) => {
+                meteo_background?.classList.remove(cls);
+                page_background?.classList.remove(cls);
+                document.body.classList.remove(cls);
+            });
+        };
+
         const setEnvironment = (condition_code: number) => {
+            clearBackgound();
             const meteo_background =
                 document.querySelector("#meteo-background");
             const page_background = document.querySelector(".weather-app-page");
@@ -68,6 +82,7 @@ function WeatherApp() {
                     thunder_code_list.includes(condition_code)
             );
 
+            console.log("condition", condition_code);
             if (condition_code === 1000) {
                 meteo_background?.classList.add("sunny-bg");
             } else if (condition_code === 1003) {
@@ -75,19 +90,22 @@ function WeatherApp() {
             } else {
                 meteo_background?.classList.add("cloudy-heavy-bg");
             }
-
             if (
                 rain_code_list.includes(condition_code) ||
                 thunder_code_list.includes(condition_code) ||
                 snow_code_list.includes(condition_code)
             ) {
                 page_background?.classList.add("meteo-dark-bg");
+                document.body.classList.add("meteo-dark-bg");
+            } else {
+                page_background?.classList.add("meteo-clear-bg");
+                document.body.classList.add("meteo-clear-bg");
             }
         };
         const fetchData = async () => {
-            const w_data = await getWeather(userCoords.lat, userCoords.lng);
-            setWeatherData(w_data);
-            setEnvironment(w_data.current_day.condition);
+            //const w_data = await getWeather(userCoords.lat, userCoords.lng);
+            setWeatherData(FakeWeather);
+            setEnvironment(FakeWeather.current_day.condition);
         };
         fetchData();
 
@@ -192,7 +210,7 @@ function WeatherApp() {
                                     <div id="condition-icon-container">
                                         {(() => {
                                             const Icon = getConditionIcon();
-                                            return <Icon />;
+                                            return <Icon className="icon" />;
                                         })()}
                                     </div>
                                     <div id="condition-label-container">
@@ -212,6 +230,7 @@ function WeatherApp() {
                                             src="/src/assets/compass.png"
                                         />
                                         <FaLocationArrow
+                                            className="icon"
                                             id="compass-arrow"
                                             style={{
                                                 transform: `translate(-50%, -50%) rotate(${getAngle()}deg)`,

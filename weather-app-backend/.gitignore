@@ -32,3 +32,8 @@ coverage/
 # Misc
 *.tgz
 *.swp
+
+#SSL Cert
+san.cnf
+server.cert
+server.key

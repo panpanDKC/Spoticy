@@ -3,6 +3,7 @@ import querystring from "querystring";
 import axios from "axios";
 import { CLIENT_ID, SCOPES, REDIRECT_URI, CLIENT_SECRET } from "../const.js";
 import { clearTokens, saveTokens } from "../utils/token_file_handler.js";
+import { isAuthentified } from "../services/user_service.js";
 
 const router = express.Router();
 
@@ -108,6 +109,15 @@ router.get("/logout", (req, res) => {
     } catch (error) {
         console.error("Error during logout:", error);
         return res.status(500).send("Error during logout");
+    }
+});
+
+router.get("/test-connection", async (req, res) => {
+    try {
+        const is_authentificated = await isAuthentified();
+        return res.status(is_authentificated ? 200 : 401).send();
+    } catch (err) {
+        console.log(err);
     }
 });
 

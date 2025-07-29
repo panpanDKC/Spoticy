@@ -51,3 +51,17 @@ export async function logout() {
         throw err;
     }
 }
+
+export async function isAuthentified() {
+    try {
+        const resp = await axios.get(`${SPOTICY_API_URL}/test-connection`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return resp.status;
+    } catch (err) {
+        console.error("Error during logout:", err);
+        throw err;
+    }
+}

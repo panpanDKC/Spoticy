@@ -13,6 +13,8 @@ export async function getUserProfile() {
             },
         });
 
+        console.log("user_rep:", resp.data);
+
         const user = {
             name: resp.data.display_name,
             mail: resp.data.email,
@@ -70,6 +72,21 @@ export async function getUserLikedTracks() {
             refreshToken(refresh_token);
             return await getUserLikedTracks(); // Retry after refreshing token
         }
+        console.log(err);
+    }
+}
+
+export async function isAuthentified() {
+    const { access_token, refresh_token } = await loadTokens();
+    try {
+        const resp = await axios.get("https://api.spotify.com/v1/me", {
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+            },
+        });
+
+        return resp.status === 200;
+    } catch (err) {
         console.log(err);
     }
 }

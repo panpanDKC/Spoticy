@@ -1,10 +1,11 @@
 import { getTrackDetails } from "../services/track_service.js";
 
 export async function filterPlaybackData(playback_data, access_token) {
+    console.log(playback_data);
     let playback = {
         device: playback_data.device.name,
         is_playing: playback_data.is_playing,
-        context_uri: playback_data.context.uri,
+        context_uri: playback_data?.context?.uri || null,
         track: {
             name: playback_data.item.name,
             progress: playback_data.progress_ms,

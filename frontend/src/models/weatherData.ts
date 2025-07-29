@@ -104,7 +104,7 @@ export const FakeWeather: CurrentAndNextWeatherData = {
             temp_min: 23,
             temp_max: 32,
         },
-        condition: 1000,
+        condition: 1003,
         wind: {
             speed: 12,
             angle: 60,

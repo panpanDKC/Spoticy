@@ -6,12 +6,27 @@
 
     margin: 0;
     height: 100vh;
-    background-color: rgb(113, 178, 242);
     /* background: url("/src/assets/test.jpeg"); */
+}
+
+.weather-app-page p {
+    color: white;
+}
+
+.icon {
+    color: white;
+}
+
+body {
+    overflow: hidden;
 }
 
 .meteo-dark-bg {
     background-color: rgb(50, 65, 80);
+}
+
+.meteo-clear-bg {
+    background-color: rgb(113, 178, 242);
 }
 
 #meteo-background {
@@ -33,10 +48,16 @@
     gap: 0.5em;
 
     height: 100%;
-    width: 30%;
+    width: 440px;
     z-index: 10;
 
     margin: 1em 0;
+}
+@media screen and (width <= 445px) {
+    .weather-app-page-content {
+        transform: scale(0.88);
+        margin: 0;
+    }
 }
 
 .location-info {
@@ -148,12 +169,13 @@
 
 #wind-compass-container {
     position: relative;
-    display: inline-block;
+    display: flex;
 
     flex: 1;
 }
 
 #compass-img {
+    justify-self: center;
     margin: auto;
     width: 90%;
 }
@@ -281,22 +303,33 @@
 }
 
 .sunny-bg {
-    background: url("/src/assets/meteo-sunny.png");
     background-size: cover; /* Remplit toute la div sans déformation */
     background-position: center; /* Centre l’image */
     background-repeat: no-repeat;
 }
 
 .cloudy-bg {
-    background: url("/src/assets/meteo-cloudy.png");
+    background: url("/src/assets/meteo-cloudy-2.png");
     background-size: cover; /* Remplit toute la div sans déformation */
     background-position: center; /* Centre l’image */
     background-repeat: no-repeat;
 }
 
 .cloudy-heavy-bg {
-    background: url("/src/assets/meteo-cloudy-heavy.png");
+    background: url("/src/assets/meteo-cloudy-heavy-3.png");
     background-size: cover; /* Remplit toute la div sans déformation */
     background-position: center; /* Centre l’image */
     background-repeat: no-repeat;
+}
+
+@media screen and (width <= 445px) {
+    .sunny-bg {
+        background-image: url("/src/assets/meteo-sunny-2.png");
+    }
+}
+
+@media screen and (width > 445px) {
+    .sunny-bg {
+        background-image: url("/src/assets/meteo-sunny-3.png");
+    }
 }

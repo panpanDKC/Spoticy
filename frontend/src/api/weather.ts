@@ -11,6 +11,9 @@ export async function getWeather(lat: number, lng: number) {
         );
         return resp.data as CurrentAndNextWeatherData;
     } catch (err) {
+        console.log(`error: ${err}`);
+
+        console.log(`api ? ${err}`);
         console.error(err);
         throw err; // Re-throw the error for further handling if needed
     }

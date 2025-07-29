@@ -1,7 +1,6 @@
 import "../styles/Connect.css";
-import { connectSpotify } from "../api/connect";
+import { connectSpotify, isAuthentified } from "../api/connect";
 import { useEffect } from "react";
-import { getUserProfile } from "../api/user";
 import { useNavigate } from "react-router-dom";
 import { SPOTICY_HOME_URL } from "../const";
 
@@ -10,8 +9,9 @@ function Connect() {
 
     useEffect(() => {
         const isConnected = async () => {
-            const resp = await getUserProfile();
-            if (resp !== null) {
+            const resp_status = await isAuthentified();
+            console.log("try user resp_status:", resp_status);
+            if (resp_status === 200) {
                 navigate(SPOTICY_HOME_URL);
             }
         };
