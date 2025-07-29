@@ -61,13 +61,13 @@ export const snow_code_list = [
     1066, 1114, 1117, 1210, 1213, 1216, 1219, 1222, 1225, 1255, 1258,
 ];
 snow_code_list.forEach((code) => {
-    IconWeatherMapping[code] = { text: "Pluie", icon: BsFillCloudSnowFill };
+    IconWeatherMapping[code] = { text: "Neige", icon: BsFillCloudSnowFill };
 });
 
 // Set icon for thunder condition
 export const thunder_code_list = [1087, 1273, 1276, 1279, 1282];
 thunder_code_list.forEach((code) => {
-    IconWeatherMapping[code] = { text: "Pluie", icon: IoThunderstorm };
+    IconWeatherMapping[code] = { text: "Orages", icon: IoThunderstorm };
 });
 
 export const FakeWeather: CurrentAndNextWeatherData = {
@@ -82,7 +82,7 @@ export const FakeWeather: CurrentAndNextWeatherData = {
             temp_min: 23,
             temp_max: 32,
         },
-        condition: 1003,
+        condition: 1000,
         wind: {
             speed: 12,
             angle: 60,

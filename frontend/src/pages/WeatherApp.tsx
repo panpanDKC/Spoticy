@@ -14,19 +14,36 @@ import {
     FakeWeather,
     IconWeatherMapping,
     rain_code_list,
+    snow_code_list,
     thunder_code_list,
     type CurrentAndNextWeatherData,
 } from "../models/weatherData";
+import Rain from "../components/Rain";
 
 function WeatherApp() {
     const [weatherData, setWeatherData] = useState<CurrentAndNextWeatherData>();
+    const [isRaining, setIsRaining] = useState<boolean>(false);
+
+    useEffect(() => {
+        const info_content = document.querySelectorAll(
+            ".content-row .info-container"
+        );
+
+        info_content.forEach((elm) => {
+            const elm_flex = parseInt(elm.getAttribute("flex") || "0");
+            elm.setAttribute("flex", (elm_flex + 1).toString());
+        });
+    });
 
     useEffect(() => {
         const setEnvironment = (condition_code: number) => {
             const meteo_background =
                 document.querySelector("#meteo-background");
             const page_background = document.querySelector(".weather-app-page");
-            console.log("condition:", condition_code);
+            setIsRaining(
+                rain_code_list.includes(condition_code) ||
+                    thunder_code_list.includes(condition_code)
+            );
 
             if (condition_code === 1000) {
                 meteo_background?.classList.add("sunny-bg");
@@ -38,7 +55,8 @@ function WeatherApp() {
 
             if (
                 rain_code_list.includes(condition_code) ||
-                thunder_code_list.includes(condition_code)
+                thunder_code_list.includes(condition_code) ||
+                snow_code_list.includes(condition_code)
             ) {
                 page_background?.classList.add("meteo-dark-bg");
             }
@@ -81,6 +99,7 @@ function WeatherApp() {
     return (
         <div className="weather-app-page">
             <div id="meteo-background">
+                {isRaining && <Rain />}
                 <div className="weather-app-page-content">
                     <div className="location-info">
                         <p className="location-city">
@@ -99,6 +118,7 @@ function WeatherApp() {
                                 <GlassCard
                                     title="TEMPERATURE"
                                     icon={FaTemperatureHalf}
+                                    isRaining={isRaining}
                                 >
                                     <div id="temps-container">
                                         <p id="current-temp-label">
@@ -144,7 +164,11 @@ function WeatherApp() {
                                 id="condition-container"
                                 className="info-container"
                             >
-                                <GlassCard title="CONDITION" icon={MdSunny}>
+                                <GlassCard
+                                    title="CONDITION"
+                                    icon={MdSunny}
+                                    isRaining={isRaining}
+                                >
                                     <div id="condition-icon-container">
                                         {(() => {
                                             const Icon = getConditionIcon();
@@ -161,7 +185,11 @@ function WeatherApp() {
                         </div>
                         <div className="content-row" id="second-line">
                             <div id="wind-container" className="info-container">
-                                <GlassCard title="VENT" icon={TbWind}>
+                                <GlassCard
+                                    title="VENT"
+                                    icon={TbWind}
+                                    isRaining={isRaining}
+                                >
                                     <div id="wind-compass-container">
                                         <img
                                             id="compass-img"
@@ -202,7 +230,11 @@ function WeatherApp() {
                         </div>
                         <div className="content-row" id="third-line">
                             <div id="sky-container" className="info-container">
-                                <GlassCard title="CIEL" icon={FaQuestion}>
+                                <GlassCard
+                                    title="CIEL"
+                                    icon={FaQuestion}
+                                    isRaining={isRaining}
+                                >
                                     <div id="uv-container">
                                         <p id="uv-label">UV</p>
                                         <p id="uv-value">
@@ -226,7 +258,11 @@ function WeatherApp() {
                                 </GlassCard>
                             </div>
                             <div id="rain-container" className="info-container">
-                                <GlassCard title="PRECIPITATION" icon={IoRainy}>
+                                <GlassCard
+                                    title="PRECIPITATION"
+                                    icon={IoRainy}
+                                    isRaining={isRaining}
+                                >
                                     <div id="rain-volume-container">
                                         <p id="rain-volume-value">
                                             {

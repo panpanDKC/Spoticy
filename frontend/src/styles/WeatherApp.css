@@ -34,6 +34,7 @@
 
     height: 100%;
     width: 30%;
+    z-index: 10;
 
     margin: 1em 0;
 }
@@ -78,6 +79,11 @@
 
 .info-container {
     display: flex;
+    transition: transform 0.3s ease-in-out;
+}
+
+.info-container:hover {
+    transform: scale(1.05);
 }
 
 #temperature-container {
@@ -274,23 +280,23 @@
     flex: 3;
 }
 
-.sunny-bg,
-.cloudy-bg,
-.cloudy-heavy-bg {
-    background-size: contain; /* Remplit toute la div sans déformation */
-    background-position: center; /* Centre l’image */
-    background-repeat: no-repeat;
-    object-fit: cover;
-}
-
 .sunny-bg {
     background: url("/src/assets/meteo-sunny.png");
+    background-size: cover; /* Remplit toute la div sans déformation */
+    background-position: center; /* Centre l’image */
+    background-repeat: no-repeat;
 }
 
 .cloudy-bg {
     background: url("/src/assets/meteo-cloudy.png");
+    background-size: cover; /* Remplit toute la div sans déformation */
+    background-position: center; /* Centre l’image */
+    background-repeat: no-repeat;
 }
 
 .cloudy-heavy-bg {
     background: url("/src/assets/meteo-cloudy-heavy.png");
+    background-size: cover; /* Remplit toute la div sans déformation */
+    background-position: center; /* Centre l’image */
+    background-repeat: no-repeat;
 }

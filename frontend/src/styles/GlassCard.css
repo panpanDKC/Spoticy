@@ -2,6 +2,9 @@
     display: flex;
     flex-direction: column;
 
+    position: relative;
+    overflow: visible;
+
     flex: 1;
 
     padding: 0.5em;
@@ -34,4 +37,113 @@
 
 .glass-content-container {
     flex: 10;
+}
+
+/* Make text above the glow layers */
+.glass-title-container,
+[class^="glass-content-container"] {
+    position: relative;
+    z-index: 1;
+}
+
+.drip-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0; /* Behind content */
+    overflow: hidden;
+}
+
+.drip-drop {
+    position: absolute;
+    top: 0px;
+    width: 8px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(1px) brightness(1.2);
+    border-radius: 45% 55% 60% 40% / 50% 60% 40% 50%;
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.15);
+    animation-name: drip;
+    animation-timing-function: cubic-bezier(
+        0.3,
+        0.1,
+        0.2,
+        1
+    ); /* simulate acceleration */
+    animation-iteration-count: infinite;
+}
+
+@keyframes drip {
+    0% {
+        transform: translate(0px, 0px);
+        opacity: 1;
+    }
+    30% {
+        transform: translate(1px, 300%);
+    }
+    60% {
+        transform: translate(-1.5px, 600%);
+    }
+    100% {
+        transform: translate(0px, 1000%);
+        opacity: 0;
+    }
+}
+
+/* ====== SHINE EFFECT ====== */
+.shiny-card {
+    /* CSS vars updated by TS */
+    --x: 50%;
+    --y: 50%;
+    --o: 0; /* opacity of shine, toggled on hover */
+    --glow-size: 120px; /* inner glare size */
+    --halo-size: 180px; /* outer halo size */
+    --glow: rgba(255, 255, 255, 0.16);
+    --glow-strong: rgba(255, 255, 255, 0.55);
+    transition: box-shadow 0.25s ease;
+}
+
+/* BORDER HIGHLIGHT + OUTER HALO */
+.shiny-card::after {
+    content: "";
+    position: absolute;
+    inset: -1px; /* extend outside to see halo */
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+
+    /* Two layers:
+     1) Bright ring riding the border
+     2) Soft outside halo
+   */
+    background: radial-gradient(
+            180px circle at var(--x) var(--y),
+            var(--glow-strong),
+            rgba(255, 255, 255, 0) 40%
+        ),
+        radial-gradient(
+            var(--halo-size) circle at var(--x) var(--y),
+            rgba(255, 255, 255, 1),
+            rgba(255, 255, 255, 0) 60%
+        );
+
+    /* Mask trick: show the bright ring only in the border area,
+     but keep the outer halo visible outside the element. */
+    padding: 1px; /* border thickness for the mask gap */
+    -webkit-mask: linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; /* Chrome/Safari */
+    mask-composite: exclude; /* Firefox */
+
+    filter: blur(10px); /* soften halo */
+    opacity: var(--o);
+    transition: opacity 0.25s ease, filter 0.25s ease;
+}
+
+/* Optional: add a subtle global lift on hover */
+.shiny-card:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
 }
